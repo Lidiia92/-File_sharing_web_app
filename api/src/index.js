@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import {connect} from './database.js';
 
 const PORT = 3000;
 const app = express();
@@ -21,8 +22,20 @@ app.use(bodyParser.json({
 }));
 app.set('root', __dirname);
 
-app.server.listen(process.env.PORT || PORT, () => {
-        console.log(`App is running on port ${app.server.address().port}`);
+connect((err, db) => {
+
+    if(err) {
+        console.log('An err occured connecting to database');
+        throw err;
+    }
+
+    app.set('db', db);
+    
+    app.server.listen(process.env.PORT || PORT, () => {
+            console.log(`App is running on port ${app.server.address().port}`);
+    });
+
 });
+
 
 export default app;
