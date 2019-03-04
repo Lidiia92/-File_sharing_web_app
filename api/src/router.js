@@ -2,6 +2,7 @@ import path from 'path';
 import File from './models/file.js';
 import {version} from '../package.json';
 import _ from 'lodash';
+import {ObjectId} from 'mongodb';
 
 
 
@@ -46,7 +47,6 @@ class AppRouter {
                         });
                     } 
 
-                    console.log('Save file with result', err, result);
                     return res.json({
                         files: fileModels,
                     });
@@ -59,32 +59,43 @@ class AppRouter {
                     }
                 });
             }
-
-            return res.json({
-                files: fileModels,
-            });
-
         });
 
-        //dowload routing
-        app.get('/api/download/:name', (req, res, next) => {
+        //download routing
+        app.get('/api/download/:id', (req, res, next) => {
 
-            const fileName = req.params.name;
-            const filePath = path.join(uploadDir, fileName);
+            const fileId = req.params.id;
 
-            return res.download(filePath, fileName, (err) => {
-                if (err) {
+            db.collection('files').find({_id: ObjectId(fileId)}).toArray((err, result) => {
+                //Find the object from db
+                
+                const fileName = _.get(result, '[0].name');
+                if(err || !fileName){
                     return res.status(404).json({
                         error: {
-                            message: "File not found." 
+                            message: "File not found."
                         }
-                    });
-                } else {
-                    console.log("File is downloaded.");
+                    })
                 }
+    
+                const filePath = path.join(uploadDir, fileName);
+    
+                return res.download(filePath, fileName, (err) => {
+                    if (err) {
+                        return res.status(404).json({
+                            error: {
+                                message: "File not found." 
+                            }
+                        });
+                    } else {
+                        console.log("File is downloaded.");
+                    }
+                });
+    
             });
-   
+
         });
+
     }
 
 }

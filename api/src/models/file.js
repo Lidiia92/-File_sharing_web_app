@@ -15,7 +15,7 @@ class File {
     }
 
     initWithObject(object) {
-        this.model.name = _.get(object, 'name');
+        this.model.name = _.get(object, 'filename');
         this.model.originalName = _.get(object, 'originalname');
         this.model.mimeType = _.get(object, 'mimetype');
         this.model.size = _.get(object, 'size');
@@ -28,12 +28,6 @@ class File {
         return this.model; 
     }
 
-    save(callback) {
-        const db = this.app.get('db');
-        db.collection('files').insertOne(this.model, (err, result) => {
-            return callback(err, results);
-        });
-    }
 }
 
 export default File;
