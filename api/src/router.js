@@ -1,4 +1,8 @@
+import path from 'path';
 import {version} from '../package.json';
+
+
+
 
 class AppRouter {
 
@@ -20,12 +24,33 @@ class AppRouter {
             });
         });
 
+        //upload routing
         app.post('/api/upload', upload.array('files'), (req, res, next) => {
             const files = req.files;
             return res.json({
                 files: files,
             })
 
+        });
+
+        //dowload routing
+        app.get('/api/download/:name', (req, res, next) => {
+
+            const fileName = req.params.name;
+            const filePath = path.join(uploadDir, fileName);
+
+            return res.download(filePath, fileName, (err) => {
+                if (err) {
+                    return res.status(404).json({
+                        error: {
+                            message: "File not found." 
+                        }
+                    });
+                } else {
+                    console.log("File is downloaded.");
+                }
+            });
+   
         });
     }
 
