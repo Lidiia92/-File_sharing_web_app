@@ -1,6 +1,7 @@
 import path from 'path';
+import File from './models/file.js';
 import {version} from '../package.json';
-
+import _ from 'lodash';
 
 
 
@@ -14,6 +15,7 @@ class AppRouter {
     setupRouters() {
 
         const app = this.app;
+        const db = app.get('db');
         const uploadDir = app.get('storageDir');
         const upload = app.get('upload');
 
@@ -26,10 +28,41 @@ class AppRouter {
 
         //upload routing
         app.post('/api/upload', upload.array('files'), (req, res, next) => {
-            const files = req.files;
+            const files = _.get(req, 'files', []);
+            let fileModels = [];
+
+            _.each(files, (fileObject) => {
+                const newFile = new File(app).initWithObject(fileObject).toJSON(); 
+                fileModels.push(newFile);
+            }); 
+
+            if (fileModels.length) {
+                db.collection('files').insertMany(fileModels, (err, result) => {
+                    if (err) {
+                        return res.status(503).json({
+                            error: {
+                                message: "Unable to save your files."
+                            }
+                        });
+                    } 
+
+                    console.log('Save file with result', err, result);
+                    return res.json({
+                        files: fileModels,
+                    });
+                });
+
+            } else {
+                return res.status(503).json({
+                    error: {
+                        message: "Files upload is required"
+                    }
+                });
+            }
+
             return res.json({
-                files: files,
-            })
+                files: fileModels,
+            });
 
         });
 
