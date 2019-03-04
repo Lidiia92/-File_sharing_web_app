@@ -1,0 +1,73 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Users\Lidii\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Lidii\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Yarn\bin;C:\Users\Lidii\AppData\Local\Microsoft\WindowsApps;C:\Users\Lidii\AppData\Roaming\npm;C:\Users\Lidii\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Lidii\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.10.1
+
+Node version: 
+  8.12.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\Lidii\Desktop\LAMBDA\Projects I'm practicing on\File_sharing_app\File_sharing_web_app\api\package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1136:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "es6-expressjs",
+    "version": "1.0.0",
+    "description": "ES6 Nodejs express 4 starter",
+    "main": "dist",
+    "scripts": {
+      "dev": "nodemon -w src --exec \"babel-node src --presets env,stage-0\"",
+      "build": "babel src -s -D -d dist --presets env,stage-0",
+      "start": "node dist",
+      "prestart": "npm run -s build",
+      "test": "eslint src"
+    },
+    "eslintConfig": {
+      "extends": "eslint:recommended",
+      "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module"
+      },
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "no-console": 0,
+        "no-unused-vars": 1
+      }
+    },
+    "author": "toan@tabvn.com",
+    "license": "ISC",
+    "dependencies": {
+      "body-parser": "^1.18.2",
+      "cors": "^2.8.4",
+      "express": "^4.16.2",
+      "morgan": "^1.9.0"
+    },
+    "devDependencies": {
+      "babel-cli": "^6.26.0",
+      "babel-core": "^6.26.0",
+      "babel-preset-env": "^1.6.1",
+      "babel-preset-stage-0": "^6.24.1",
+      "eslint": "^4.9.0",
+      "nodemon": "^1.12.1"
+    }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
